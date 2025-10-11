@@ -48,6 +48,8 @@ CHANGELOG.md
 # Scripts de développement
 package.json
 package-lock.json
+composer.json
+composer.lock
 webpack.config.js
 gulpfile.js
 
