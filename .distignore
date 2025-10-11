@@ -1,0 +1,59 @@
+# Fichier pour définir les exclusions lors du packaging du plugin
+# Utilisé par les scripts de build pour créer une version propre
+
+# Fichiers de développement
+.git/
+.github/
+.gitignore
+.gitattributes
+
+# Fichiers de build
+build/
+dist/
+
+# Dépendances de développement
+node_modules/
+tests/
+phpunit.xml
+phpunit.xml.dist
+
+# Fichiers temporaires
+*.tmp
+*.temp
+*~
+*.log
+
+# Fichiers système
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# Environnement
+.env*
+
+# Documentation de développement
+CONTRIBUTING.md
+CHANGELOG.md
+
+# Scripts de développement
+package.json
+package-lock.json
+composer.json
+composer.lock
+webpack.config.js
+gulpfile.js
+
+# Fichiers PDF de test
+test*.pdf
+sample*.pdf
+watermarked_*.pdf
