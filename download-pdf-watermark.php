@@ -15,11 +15,22 @@ if (file_exists(__DIR__ . '/vendor/autoload.php')) {
 // Import des classes nécessaires
 use setasign\Fpdi\Fpdi;
 
+// Charger les classes d'administration
+require_once __DIR__ . '/admin/class-dpw-settings.php';
+
+// Initialiser les paramètres d'administration
+if (is_admin()) {
+    DPW_Settings::init();
+}
+
 // Fonction pour générer le texte du filigrane personnalisé
 function dpw_generate_watermark_text($email = '', $order = null, $custom_text = '') {
     // Si un texte personnalisé est fourni, l'utiliser
     if (!empty($custom_text)) {
-        return $custom_text;
+        $watermark_text = $custom_text;
+    } else {
+        // Récupérer le template de texte depuis les paramètres
+        $watermark_text = DPW_Settings::get_option('watermark_text', 'Acheté sur {blog_name} par {customer_name} ({customer_email})');
     }
     
     // Récupérer les informations du site et du client
@@ -35,8 +46,12 @@ function dpw_generate_watermark_text($email = '', $order = null, $custom_text = 
         }
     }
     
-    // Construire le texte du filigrane
-    $watermark_text = "Acheté sur {$blog_name} par {$customer_name} ({$customer_email})";
+    // Remplacer les variables dans le template
+    $watermark_text = str_replace(
+        array('{blog_name}', '{customer_name}', '{customer_email}'),
+        array($blog_name, $customer_name, $customer_email),
+        $watermark_text
+    );
     
     // Convertir en ISO-8859-1 pour FPDF avec gestion robuste des accents
     if (function_exists('iconv')) {
@@ -80,11 +95,29 @@ function dpw_add_watermark_to_pdf($pdf_path, $watermark_text = '') {
         $size = $pdf->getTemplateSize($tpl);
         $pdf->AddPage($size['orientation'], [$size['width'], $size['height']]);
         $pdf->useTemplate($tpl);
+        // Récupérer les paramètres de style depuis les options
+        $font_size = intval(DPW_Settings::get_option('font_size', '12'));
+        $position_y = intval(DPW_Settings::get_option('position_y', '6'));
+        $text_color = DPW_Settings::get_option('text_color', 'black');
+        
         // Ajouter le filigrane
-        $pdf->SetFont('Arial', '', 12);
-        $pdf->SetTextColor(0, 0, 0); // Noir
-        // Position plus bas sur la page, centré horizontalement
-        $watermark_y = $size['height'] - 6;
+        $pdf->SetFont('Arial', '', $font_size);
+        
+        // Définir la couleur du texte
+        switch ($text_color) {
+            case 'gray':
+                $pdf->SetTextColor(128, 128, 128);
+                break;
+            case 'light_gray':
+                $pdf->SetTextColor(200, 200, 200);
+                break;
+            default: // black
+                $pdf->SetTextColor(0, 0, 0);
+                break;
+        }
+        
+        // Position selon les paramètres, centré horizontalement
+        $watermark_y = $size['height'] - $position_y;
         // Calculer la position X pour centrer le texte
         $text_width = $pdf->GetStringWidth($final_watermark_text);
         $center_x = ($size['width'] - $text_width) / 2;
@@ -104,6 +137,11 @@ function dpw_add_watermark_to_pdf($pdf_path, $watermark_text = '') {
 
 // Interception du téléchargement WooCommerce pour les fichiers PDF
 add_filter('woocommerce_download_product_filepath', function($file_path, $email, $order, $product, $download) {
+    // Vérifier si le filigrane est activé
+    if (DPW_Settings::get_option('enabled', 'yes') !== 'yes') {
+        return $file_path;
+    }
+    
     // Vérifie si le fichier est un PDF
     if (strtolower(pathinfo($file_path, PATHINFO_EXTENSION)) === 'pdf') {
         // Générer le texte du filigrane personnalisé
