@@ -3,7 +3,7 @@
  * Classe pour gérer les paramètres d'administration du plugin Download PDF Watermark
  */
 
-if (!defined('ABSPATH')) exit;
+if (!defined('ABSPATH')) wp_die();
 
 class DPW_Settings {
     
