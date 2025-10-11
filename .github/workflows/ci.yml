@@ -101,7 +101,7 @@ jobs:
         zip -r download-pdf-watermark-dev-${{ steps.commit_info.outputs.branch_name }}-${{ steps.commit_info.outputs.commit_short }}.zip download-pdf-watermark/
         
     - name: Upload development build
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: download-pdf-watermark-dev-${{ steps.commit_info.outputs.branch_name }}-${{ steps.commit_info.outputs.commit_short }}
         path: build/download-pdf-watermark-dev-${{ steps.commit_info.outputs.branch_name }}-${{ steps.commit_info.outputs.commit_short }}.zip
