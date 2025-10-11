@@ -1,4 +1,7 @@
 {
+    "name": "patou/download-pdf-watermark",
+    "description": "Plugin WordPress pour ajouter un filigrane personnalisé aux PDF téléchargés.",
+    "license": "GPL-2.0-or-later",
     "require": {
         "setasign/fpdi": "^2.6",
         "setasign/fpdf": "^1.8"
