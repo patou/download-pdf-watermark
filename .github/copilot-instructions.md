@@ -1,0 +1,6 @@
+- [x] Création du dossier et des fichiers principaux du plugin download-pdf-watermark
+- [x] Ajout du fichier principal PHP avec hook d’exemple
+- [x] Ajout du README.md avec instructions
+- [x] Création des dossiers includes, admin, public, assets, .github
+- [ ] Ajouter la logique métier pour le filigrane PDF
+- [ ] Ajouter une interface d’administration pour configurer le texte du filigrane
