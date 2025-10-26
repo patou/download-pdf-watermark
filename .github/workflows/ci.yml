@@ -79,10 +79,10 @@ jobs:
         cp README.md build/download-pdf-watermark/
         cp composer.json build/download-pdf-watermark/
         cp -r admin build/download-pdf-watermark/
-        cp -r assets build/download-pdf-watermark/
         cp -r includes build/download-pdf-watermark/
         cp -r public build/download-pdf-watermark/
         cp -r vendor build/download-pdf-watermark/
+        cp -r languages build/download-pdf-watermark/
         
         # Nettoyer
         find build/download-pdf-watermark -name ".DS_Store" -delete
