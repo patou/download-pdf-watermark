@@ -80,9 +80,11 @@ jobs:
         cp composer.json build/download-pdf-watermark/
         cp -r admin build/download-pdf-watermark/
         cp -r includes build/download-pdf-watermark/
-        cp -r public build/download-pdf-watermark/
         cp -r vendor build/download-pdf-watermark/
-        cp -r languages build/download-pdf-watermark/
+        
+        # Copier les dossiers optionnels s'ils existent et ne sont pas vides
+        [ -d "public" ] && [ "$(ls -A public)" ] && cp -r public build/download-pdf-watermark/ || echo "Dossier public vide ou inexistant, ignoré"
+        [ -d "languages" ] && [ "$(ls -A languages)" ] && cp -r languages build/download-pdf-watermark/ || echo "Dossier languages vide ou inexistant, ignoré"
         
         # Nettoyer
         find build/download-pdf-watermark -name ".DS_Store" -delete
