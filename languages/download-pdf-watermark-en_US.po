@@ -1,0 +1,93 @@
+# English translation for Download PDF Watermark plugin
+# Copyright (C) 2025 Patrice de Saint Steban
+# This file is distributed under the same license as the Download PDF Watermark package.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Download PDF Watermark 1.0.0\n"
+"Report-Msgid-Bugs-To: https://github.com/patou/download-pdf-watermark/issues\n"
+"POT-Creation-Date: 2025-10-26 10:00+0000\n"
+"PO-Revision-Date: 2025-10-26 10:00+0000\n"
+"Last-Translator: Patrice de Saint Steban <patrice@example.com>\n"
+"Language-Team: English <en@li.org>\n"
+"Language: en_US\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: admin/class-dpw-settings.php:23
+msgid "PDF Watermark"
+msgstr "PDF Watermark"
+
+#: admin/class-dpw-settings.php:47
+msgid "Paramètres du filigrane PDF"
+msgstr "PDF Watermark Settings"
+
+#: admin/class-dpw-settings.php:49
+msgid "Configurez l'apparence et le contenu du filigrane ajouté aux fichiers PDF téléchargés."
+msgstr "Configure the appearance and content of the watermark added to downloaded PDF files."
+
+#: admin/class-dpw-settings.php:54
+msgid "Texte du filigrane"
+msgstr "Watermark Text"
+
+#: admin/class-dpw-settings.php:56
+msgid "Texte à afficher en filigrane. Utilisez {blog_name}, {customer_name} et {customer_email} comme variables."
+msgstr "Text to display as watermark. Use {blog_name}, {customer_name} and {customer_email} as variables."
+
+#: admin/class-dpw-settings.php:63
+msgid "Taille de la police"
+msgstr "Font Size"
+
+#: admin/class-dpw-settings.php:65
+msgid "Taille de la police du filigrane (en points)."
+msgstr "Watermark font size (in points)."
+
+#: admin/class-dpw-settings.php:76
+msgid "Position verticale"
+msgstr "Vertical Position"
+
+#: admin/class-dpw-settings.php:78
+msgid "Distance depuis le bas de la page (en pixels)."
+msgstr "Distance from the bottom of the page (in pixels)."
+
+#: admin/class-dpw-settings.php:89
+msgid "Couleur du texte"
+msgstr "Text Color"
+
+#: admin/class-dpw-settings.php:91
+msgid "Couleur du texte du filigrane."
+msgstr "Watermark text color."
+
+#: admin/class-dpw-settings.php:95
+msgid "Noir"
+msgstr "Black"
+
+#: admin/class-dpw-settings.php:96
+msgid "Gris"
+msgstr "Gray"
+
+#: admin/class-dpw-settings.php:97
+msgid "Gris clair"
+msgstr "Light Gray"
+
+#: admin/class-dpw-settings.php:102
+msgid "Activer le filigrane"
+msgstr "Enable Watermark"
+
+#: admin/class-dpw-settings.php:104
+msgid "Cochez pour activer l'ajout automatique du filigrane aux PDF téléchargés."
+msgstr "Check to enable automatic watermark addition to downloaded PDFs."
+
+#. Plugin Name of the plugin
+msgid "Download PDF Watermark"
+msgstr "Download PDF Watermark"
+
+#. Description of the plugin
+msgid "Ajoute un filigrane personnalisé aux fichiers PDF téléchargés via le site WordPress."
+msgstr "Adds a custom watermark to PDF files downloaded through the WordPress site."
+
+#. Author of the plugin
+msgid "Patrice de Saint Steban"
+msgstr "Patrice de Saint Steban"

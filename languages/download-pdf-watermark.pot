@@ -1,0 +1,92 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: download-pdf-watermark 1.0.0\n"
+"Report-Msgid-Bugs-To: https://github.com/patou/download-pdf-watermark/issues\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2025-10-26T20:41:02+00:00\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"X-Generator: WP-CLI 2.12.0\n"
+"X-Domain: download-pdf-watermark\n"
+
+#. Plugin Name of the plugin
+#: download-pdf-watermark.php
+msgid "Download PDF Watermark"
+msgstr ""
+
+#. Description of the plugin
+#: download-pdf-watermark.php
+msgid "Ajoute un filigrane personnalisé aux fichiers PDF téléchargés via le site WordPress."
+msgstr ""
+
+#. Author of the plugin
+#: download-pdf-watermark.php
+msgid "Patrice de Saint Steban"
+msgstr ""
+
+#: admin/class-dpw-settings.php:23
+msgid "PDF Watermark"
+msgstr ""
+
+#: admin/class-dpw-settings.php:47
+msgid "Paramètres du filigrane PDF"
+msgstr ""
+
+#: admin/class-dpw-settings.php:49
+msgid "Configurez l'apparence et le contenu du filigrane ajouté aux fichiers PDF téléchargés."
+msgstr ""
+
+#: admin/class-dpw-settings.php:54
+msgid "Texte du filigrane"
+msgstr ""
+
+#: admin/class-dpw-settings.php:56
+msgid "Texte à afficher en filigrane. Utilisez {blog_name}, {customer_name} et {customer_email} comme variables."
+msgstr ""
+
+#: admin/class-dpw-settings.php:63
+msgid "Taille de la police"
+msgstr ""
+
+#: admin/class-dpw-settings.php:65
+msgid "Taille de la police du filigrane (en points)."
+msgstr ""
+
+#: admin/class-dpw-settings.php:76
+msgid "Position verticale"
+msgstr ""
+
+#: admin/class-dpw-settings.php:78
+msgid "Distance depuis le bas de la page (en pixels)."
+msgstr ""
+
+#: admin/class-dpw-settings.php:89
+msgid "Couleur du texte"
+msgstr ""
+
+#: admin/class-dpw-settings.php:91
+msgid "Couleur du texte du filigrane."
+msgstr ""
+
+#: admin/class-dpw-settings.php:95
+msgid "Noir"
+msgstr ""
+
+#: admin/class-dpw-settings.php:96
+msgid "Gris"
+msgstr ""
+
+#: admin/class-dpw-settings.php:97
+msgid "Gris clair"
+msgstr ""
+
+#: admin/class-dpw-settings.php:102
+msgid "Activer le filigrane"
+msgstr ""
+
+#: admin/class-dpw-settings.php:104
+msgid "Cochez pour activer l'ajout automatique du filigrane aux PDF téléchargés."
+msgstr ""

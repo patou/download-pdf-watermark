@@ -4,6 +4,8 @@ Plugin Name: Download PDF Watermark
 Description: Ajoute un filigrane personnalisé aux fichiers PDF téléchargés via le site WordPress.
 Version: 1.0.0
 Author: Patrice de Saint Steban
+Text Domain: download-pdf-watermark
+Domain Path: /languages
 */
 
 if (!defined('ABSPATH')) exit;
@@ -22,6 +24,16 @@ require_once __DIR__ . '/includes/class-dpw-utils.php';
 // Initialiser les paramètres d'administration
 if (is_admin()) {
     DPW_Settings::init();
+}
+
+// Charger les traductions
+add_action('init', 'dpw_load_textdomain');
+
+/**
+ * Charge le domaine de texte pour les traductions
+ */
+function dpw_load_textdomain() {
+    load_plugin_textdomain('download-pdf-watermark', false, basename(dirname(__FILE__)) . '/languages/');
 }
 
 
