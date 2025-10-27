@@ -166,7 +166,7 @@ function dpw_cleanup_temp_files($max_age = 86400) {
     if ($files) {
         foreach ($files as $file) {
             if (file_exists($file) && (time() - filemtime($file)) > $max_age) {
-                unlink($file);
+                wp_delete_file($file);
             }
         }
     }
