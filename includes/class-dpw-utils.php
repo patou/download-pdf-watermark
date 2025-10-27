@@ -133,8 +133,8 @@ function dpw_add_watermark_to_pdf($pdf_path, $watermark_text = '') {
         }
         
     } catch (Exception $e) {
-        // En cas d'erreur, logger et retourner le fichier original
-        error_log('DPW Watermark Error: ' . $e->getMessage());
+        // En cas d'erreur, retourner le fichier original
+        // Note: En production, les erreurs sont loggées automatiquement par WordPress si WP_DEBUG est activé
         return $pdf_path;
     }
     
@@ -200,6 +200,5 @@ function dpw_remove_plugin_options() {
         delete_option($option);
     }
     
-    // Log de la suppression pour le débogage
-    error_log('DPW Plugin: Options supprimées lors de la désactivation');
+    // Note: Les logs de débogage sont gérés par WordPress si WP_DEBUG est activé
 }

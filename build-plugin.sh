@@ -283,16 +283,28 @@ copy_plugin_files() {
         fi
     done
     
-    # Dossiers optionnels
-    local optional_dirs=("public" "languages")
-    for dir in "${optional_dirs[@]}"; do
-        if [ -d "$dir" ] && [ "$(ls -A $dir)" ]; then
-            cp -r "$dir" "$dest/"
-            log "SUCCESS" "Dossier $dir/ copié"
-        else
-            log "INFO" "Dossier $dir/ vide ou inexistant, ignoré"
-        fi
-    done
+    # Dossier public (optionnel)
+    if [ -d "public" ] && [ "$(ls -A public)" ]; then
+        cp -r "public" "$dest/"
+        log "SUCCESS" "Dossier public/ copié"
+    else
+        log "INFO" "Dossier public/ vide ou inexistant, ignoré"
+    fi
+    
+    # Dossier languages (en excluant les fichiers shell non autorisés par WordPress.org)
+    if [ -d "languages" ] && [ "$(ls -A languages)" ]; then
+        mkdir -p "$dest/languages"
+        # Copier seulement les fichiers de traduction (.po, .mo, .pot) et README.md
+        find languages -name "*.po" -o -name "*.mo" -o -name "*.pot" -o -name "README.md" | while read file; do
+            cp "$file" "$dest/$file"
+            if [ "$VERBOSE" = true ]; then
+                log "INFO" "Copié: $file"
+            fi
+        done
+        log "SUCCESS" "Fichiers de traduction copiés (scripts shell exclus)"
+    else
+        log "INFO" "Dossier languages/ vide ou inexistant, ignoré"
+    fi
 }
 
 # Nettoyage du build

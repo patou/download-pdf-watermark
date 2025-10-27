@@ -7,7 +7,7 @@
  * Text Domain: download-pdf-watermark
  * Domain Path: /languages
  * Requires at least: 5.0
- * Tested up to: 6.4
+ * Tested up to: 6.8
  * Requires PHP: 7.4
  * Requires Plugins : woocommerce
  * License: GPL v2 or later
@@ -38,15 +38,7 @@ if (is_admin()) {
     DPW_Settings::init();
 }
 
-// Charger les traductions
-add_action('init', 'dpw_load_textdomain');
-
-/**
- * Charge le domaine de texte pour les traductions
- */
-function dpw_load_textdomain() {
-    load_plugin_textdomain('download-pdf-watermark', false, basename(dirname(__FILE__)) . '/languages/');
-}
+// Les traductions sont automatiquement chargées par WordPress pour les plugins hébergés sur wordpress.org
 
 
 

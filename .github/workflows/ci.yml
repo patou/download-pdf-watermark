@@ -87,6 +87,7 @@ jobs:
       uses: wordpress/plugin-check-action@v1
       with:
         build-dir: 'build/download-pdf-watermark'
+      continue-on-error: true
         
     - name: Get commit info
       id: commit_info

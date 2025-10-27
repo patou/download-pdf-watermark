@@ -1,9 +1,9 @@
 === Download PDF Watermark ===
 Contributors: patou
 Donate link: https://github.com/patou/download-pdf-watermark
-Tags: pdf, watermark, woocommerce, download, digital, protection, security, customization
+Tags: pdf, watermark, woocommerce, download, digital
 Requires at least: 5.0
-Tested up to: 6.4
+Tested up to: 6.8
 Requires PHP: 7.4
 Stable tag: 1.0.0
 License: GPLv2 or later
