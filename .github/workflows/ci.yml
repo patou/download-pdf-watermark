@@ -97,17 +97,12 @@ jobs:
         echo "commit_short=$COMMIT_SHORT" >> $GITHUB_OUTPUT
         echo "branch_name=$BRANCH_NAME" >> $GITHUB_OUTPUT
         
-    - name: Upload development build (ZIP ready for WordPress)
+    - name: Upload development build (plugin folder)
       uses: actions/upload-artifact@v4
       with:
-        name: download-pdf-watermark-dev-${{ steps.commit_info.outputs.branch_name }}-${{ steps.commit_info.outputs.commit_short }}
+        # Garder le nom interne du dossier tel quel pour que l'archive soit directement installable
+        name: download-pdf-watermark
+        # Upload du contenu du dossier build/download-pdf-watermark/ (préserve la structure)
         path: |
-          build/download-pdf-watermark-dev.zip
-        retention-days: 7
-        
-    - name: Upload development build (extracted folder)
-      uses: actions/upload-artifact@v4
-      with:
-        name: download-pdf-watermark-dev-folder-${{ steps.commit_info.outputs.branch_name }}-${{ steps.commit_info.outputs.commit_short }}
-        path: build/download-pdf-watermark/
+          build/download-pdf-watermark/**
         retention-days: 7
