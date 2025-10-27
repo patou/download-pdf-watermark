@@ -9,6 +9,8 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
     
     strategy:
       matrix:
@@ -57,6 +59,9 @@ jobs:
     runs-on: ubuntu-latest
     needs: test
     if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/develop'
+    permissions:
+      contents: read
+      packages: read
     
     steps:
     - name: Checkout code
@@ -102,7 +107,6 @@ jobs:
       with:
         # Garder le nom interne du dossier tel quel pour que l'archive soit directement installable
         name: download-pdf-watermark
-        # Upload du contenu du dossier build/download-pdf-watermark/ (préserve la structure)
-        path: |
-          build/download-pdf-watermark/**
+        # Upload du dossier build/download-pdf-watermark/ (préserve la structure avec le nom du dossier)
+        path: build/download-pdf-watermark/
         retention-days: 7
