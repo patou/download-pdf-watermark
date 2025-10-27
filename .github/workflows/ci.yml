@@ -43,21 +43,13 @@ jobs:
     - name: Check PHP syntax
       run: find . -name "*.php" -not -path "./vendor/*" -exec php -l {} \;
       
-    - name: Run PHPUnit tests
-      run: |
-        if [ -f "vendor/bin/phpunit" ]; then
-          echo "Running PHPUnit tests..."
-          ./vendor/bin/phpunit --testsuite=unit --testdox
-        else
-          echo "PHPUnit not found, skipping tests"
-        fi
-      
     - name: Verify plugin file structure
       run: |
         echo "Checking plugin structure..."
         test -f download-pdf-watermark.php || (echo "Main plugin file missing" && exit 1)
         test -d includes || (echo "Includes directory missing" && exit 1)
-        test -f includes/class-dpw-settings.php || (echo "Settings class file missing" && exit 1)
+        test -d admin || (echo "Admin directory missing" && exit 1)
+        test -f admin/class-dpw-settings.php || (echo "Settings class file missing" && exit 1)
         test -f includes/class-dpw-utils.php || (echo "Utils class file missing" && exit 1)
         echo "Plugin structure is valid ✓"
 

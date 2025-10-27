@@ -62,7 +62,7 @@ jobs:
         fi
         
     - name: Upload build artifact
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: download-pdf-watermark-${{ steps.get_version.outputs.version }}
         path: build/download-pdf-watermark-${{ steps.get_version.outputs.version }}.zip
