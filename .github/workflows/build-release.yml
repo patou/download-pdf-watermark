@@ -41,45 +41,11 @@ jobs:
         restore-keys: |
           ${{ runner.os }}-php-
           
-    - name: Install Composer dependencies
-      run: composer install --no-dev --optimize-autoloader --no-interaction
+    - name: Make build script executable
+      run: chmod +x build-plugin.sh
       
-    - name: Compile translation files
-      run: |
-        cd languages
-        echo "🌍 Compilation des fichiers de traduction..."
-        for po_file in *.po; do
-          if [ -f "$po_file" ]; then
-            echo "Compilation: $po_file"
-            wp i18n make-mo "$po_file" --quiet
-          fi
-        done
-        echo "✅ Traductions compilées"
-        ls -la *.mo
-      
-    - name: Create plugin directory
-      run: mkdir -p build/download-pdf-watermark
-      
-    - name: Copy plugin files
-      run: |
-        # Copier les fichiers principaux
-        cp download-pdf-watermark.php build/download-pdf-watermark/
-        cp README.md build/download-pdf-watermark/
-        cp LICENSE build/download-pdf-watermark/
-        cp composer.json build/download-pdf-watermark/
-        
-        # Copier les dossiers nécessaires
-        cp -r admin build/download-pdf-watermark/
-        cp -r includes build/download-pdf-watermark/
-        cp -r vendor build/download-pdf-watermark/
-        
-        # Copier les dossiers optionnels s'ils existent et ne sont pas vides
-        [ -d "public" ] && [ "$(ls -A public)" ] && cp -r public build/download-pdf-watermark/ || echo "Dossier public vide ou inexistant, ignoré"
-        [ -d "languages" ] && [ "$(ls -A languages)" ] && cp -r languages build/download-pdf-watermark/ || echo "Dossier languages vide ou inexistant, ignoré"
-        
-        # Supprimer les fichiers de développement du build
-        find build/download-pdf-watermark -name ".DS_Store" -delete
-        find build/download-pdf-watermark -name "*.log" -delete
+    - name: Build plugin using build script
+      run: ./build-plugin.sh --type ci --verbose
         
     - name: Get plugin version
       id: get_version
@@ -88,10 +54,12 @@ jobs:
         echo "version=$VERSION" >> $GITHUB_OUTPUT
         echo "Plugin version: $VERSION"
         
-    - name: Create ZIP archive
+    - name: Rename ZIP file for release
       run: |
-        cd build
-        zip -r download-pdf-watermark-${{ steps.get_version.outputs.version }}.zip download-pdf-watermark/
+        # Le script build-plugin.sh crée un ZIP avec le nom ci, on le renomme pour la release
+        if [ -f "build/download-pdf-watermark-ci.zip" ]; then
+          mv build/download-pdf-watermark-ci.zip build/download-pdf-watermark-${{ steps.get_version.outputs.version }}.zip
+        fi
         
     - name: Upload build artifact
       uses: actions/upload-artifact@v3

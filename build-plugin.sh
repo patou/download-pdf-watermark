@@ -185,7 +185,7 @@ copy_plugin_files() {
     local dest="$BUILD_DIR/$PLUGIN_NAME"
     
     # Fichiers principaux
-    local main_files=("download-pdf-watermark.php" "README.md" "composer.json")
+    local main_files=("download-pdf-watermark.php" "README.md" "readme.txt" "composer.json")
     for file in "${main_files[@]}"; do
         if [ -f "$file" ]; then
             cp "$file" "$dest/"
