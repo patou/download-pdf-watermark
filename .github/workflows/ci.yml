@@ -79,6 +79,9 @@ jobs:
         
     - name: Make build script executable
       run: chmod +x build-plugin.sh
+    
+    - name: Run plugin check
+      uses: wordpress/plugin-check-action@v1
       
     - name: Build plugin using build script (dev)
       run: ./build-plugin.sh --type dev --verbose
