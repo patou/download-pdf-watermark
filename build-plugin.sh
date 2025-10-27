@@ -382,10 +382,27 @@ create_zip_archive() {
             ;;
     esac
     
+    # Créer un ZIP plus propre en excluant les fichiers problématiques
     if [ "$VERBOSE" = true ]; then
-        zip -r "$zip_name" "$PLUGIN_NAME/"
+        zip -r "$zip_name" "$PLUGIN_NAME/" \
+            -x "$PLUGIN_NAME/.DS_Store" \
+            -x "$PLUGIN_NAME/*/.DS_Store" \
+            -x "$PLUGIN_NAME/*/*/.DS_Store" \
+            -x "$PLUGIN_NAME/*/*/*/.DS_Store" \
+            -x "$PLUGIN_NAME/*.log" \
+            -x "$PLUGIN_NAME/*/*.log" \
+            -x "$PLUGIN_NAME/.git*" \
+            -x "$PLUGIN_NAME/*/.git*"
     else
-        zip -r "$zip_name" "$PLUGIN_NAME/" -q
+        zip -r "$zip_name" "$PLUGIN_NAME/" -q \
+            -x "$PLUGIN_NAME/.DS_Store" \
+            -x "$PLUGIN_NAME/*/.DS_Store" \
+            -x "$PLUGIN_NAME/*/*/.DS_Store" \
+            -x "$PLUGIN_NAME/*/*/*/.DS_Store" \
+            -x "$PLUGIN_NAME/*.log" \
+            -x "$PLUGIN_NAME/*/*.log" \
+            -x "$PLUGIN_NAME/.git*" \
+            -x "$PLUGIN_NAME/*/.git*"
     fi
     
     cd ..
