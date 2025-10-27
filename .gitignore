@@ -6,6 +6,7 @@ composer.lock
 *.tmp
 *.temp
 *~
+build/
 
 # Fichiers de sauvegarde
 *.bak

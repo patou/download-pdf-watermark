@@ -1,14 +1,22 @@
 <?php
-/*
-Plugin Name: Download PDF Watermark
-Description: Ajoute un filigrane personnalisé aux fichiers PDF téléchargés via le site WordPress.
-Version: 1.0.0
-Author: Patrice de Saint Steban
-Text Domain: download-pdf-watermark
-Domain Path: /languages
-*/
+/**
+ * Plugin Name: Download PDF Watermark
+ * Description: Ajoute un filigrane personnalisé aux fichiers PDF téléchargés via le site WordPress.
+ * Version: 1.0.0
+ * Author: Patrice de Saint Steban
+ * Text Domain: download-pdf-watermark
+ * Domain Path: /languages
+ * Requires at least: 5.0
+ * Tested up to: 6.4
+ * Requires PHP: 7.4
+ * Network: false
+ * License: GPL v2 or later
+ * License URI: https://www.gnu.org/licenses/gpl-2.0.html
+ */
 
-if (!defined('ABSPATH')) exit;
+if (!defined('ABSPATH')) {
+    exit; // Exit if accessed directly
+}
 
 if (file_exists(__DIR__ . '/vendor/autoload.php')) {
     require_once __DIR__ . '/vendor/autoload.php';

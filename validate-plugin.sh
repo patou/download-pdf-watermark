@@ -72,6 +72,21 @@ if [ -f "$PLUGIN_PATH/$MAIN_FILE" ]; then
     # Vérifier la présence des métadonnées WordPress obligatoires
     PLUGIN_HEADER=$(head -30 "$PLUGIN_PATH/$MAIN_FILE")
     
+    # Vérifier le format du commentaire DocBlock
+    if echo "$PLUGIN_HEADER" | grep -q "^/\*\*" && echo "$PLUGIN_HEADER" | grep -q "\*/"; then
+        success "Format de commentaire DocBlock détecté (/**...*/)"
+    else
+        error "En-tête du plugin doit utiliser le format DocBlock (/** ... */) au lieu de /* ... */"
+    fi
+    
+    # Vérifier que le plugin commence bien par <?php
+    FIRST_LINE=$(head -1 "$PLUGIN_PATH/$MAIN_FILE")
+    if [ "$FIRST_LINE" = "<?php" ]; then
+        success "Balise PHP d'ouverture correcte"
+    else
+        error "Le fichier doit commencer par <?php"
+    fi
+    
     # Plugin Name
     if echo "$PLUGIN_HEADER" | grep -q "Plugin Name:"; then
         PLUGIN_NAME_VALUE=$(echo "$PLUGIN_HEADER" | grep "Plugin Name:" | cut -d':' -f2 | xargs)
