@@ -149,33 +149,77 @@ compile_translations() {
     
     cd languages
     local compiled=0
+    local total=0
     
     for po_file in *.po; do
         if [ -f "$po_file" ]; then
+            ((total++))
+            local mo_file="${po_file%.po}.mo"
+            
+            # Vérifier si le fichier .mo existe et est plus récent que le .po
+            if [ -f "$mo_file" ] && [ "$mo_file" -nt "$po_file" ]; then
+                ((compiled++))
+                if [ "$VERBOSE" = true ]; then
+                    log "INFO" "⏭️  $mo_file déjà à jour"
+                fi
+                continue
+            fi
+            
             if [ "$VERBOSE" = true ]; then
                 echo "Compilation: $po_file"
             fi
             
-            local mo_file="${po_file%.po}.mo"
-            
-            # Essayer d'abord avec WP-CLI
-            if command -v wp &> /dev/null && wp i18n make-mo "$po_file" --quiet 2>/dev/null; then
-                ((compiled++))
-                if [ "$VERBOSE" = true ]; then
-                    log "INFO" "Compilé avec WP-CLI: $mo_file"
-                fi
-            # Fallback avec msgfmt si disponible
-            elif command -v msgfmt &> /dev/null; then
+            # Utiliser msgfmt comme méthode principale (plus fiable)
+            if command -v msgfmt &> /dev/null; then
                 if msgfmt -o "$mo_file" "$po_file" 2>/dev/null; then
                     ((compiled++))
                     if [ "$VERBOSE" = true ]; then
-                        log "INFO" "Compilé avec msgfmt: $mo_file"
+                        log "INFO" "✅ $mo_file créé avec msgfmt"
                     fi
                 else
-                    log "WARNING" "Échec de compilation de $po_file avec msgfmt"
+                    if [ "$VERBOSE" = true ]; then
+                        log "WARNING" "⚠️  Échec msgfmt pour $po_file, tentative WP-CLI..."
+                    fi
+                    # Fallback avec WP-CLI seulement si msgfmt échoue
+                    if command -v wp &> /dev/null && wp i18n make-mo "$po_file" --quiet 2>/dev/null; then
+                        ((compiled++))
+                        if [ "$VERBOSE" = true ]; then
+                            log "INFO" "✅ $mo_file créé avec WP-CLI (fallback)"
+                        fi
+                    else
+                        # Si aucune compilation ne marche mais que le fichier .mo existe, le garder
+                        if [ -f "$mo_file" ]; then
+                            ((compiled++))
+                            log "WARNING" "⚠️  Utilisation du fichier $mo_file existant"
+                        else
+                            log "WARNING" "❌ Impossible de compiler $po_file"
+                        fi
+                    fi
+                fi
+            # Si msgfmt n'est pas disponible, essayer WP-CLI
+            elif command -v wp &> /dev/null; then
+                if wp i18n make-mo "$po_file" --quiet 2>/dev/null; then
+                    ((compiled++))
+                    if [ "$VERBOSE" = true ]; then
+                        log "INFO" "✅ $mo_file créé avec WP-CLI"
+                    fi
+                else
+                    # Si WP-CLI échoue mais que le fichier .mo existe, le garder
+                    if [ -f "$mo_file" ]; then
+                        ((compiled++))
+                        log "WARNING" "⚠️  Utilisation du fichier $mo_file existant"
+                    else
+                        log "WARNING" "❌ Échec WP-CLI pour $po_file"
+                    fi
                 fi
             else
-                log "WARNING" "Impossible de compiler $po_file : ni WP-CLI ni msgfmt disponible"
+                # Si aucun outil n'est disponible mais que le fichier .mo existe, le garder
+                if [ -f "$mo_file" ]; then
+                    ((compiled++))
+                    log "WARNING" "⚠️  Aucun outil de compilation, utilisation du fichier $mo_file existant"
+                else
+                    log "WARNING" "❌ Aucun outil de compilation disponible pour $po_file"
+                fi
             fi
         fi
     done
@@ -183,7 +227,9 @@ compile_translations() {
     cd ..
     
     if [ $compiled -gt 0 ]; then
-        log "SUCCESS" "$compiled fichier(s) de traduction compilé(s)"
+        log "SUCCESS" "$compiled/$total fichier(s) de traduction compilé(s) avec succès"
+    elif [ $total -gt 0 ]; then
+        log "WARNING" "Aucun fichier de traduction compilé ($total fichier(s) trouvé(s))"
     else
         log "INFO" "Aucun fichier de traduction à compiler"
     fi
