@@ -12,6 +12,10 @@
  * Network: false
  * License: GPL v2 or later
  * License URI: https://www.gnu.org/licenses/gpl-2.0.html
+ * 
+ * @package         Download_PDF_Watermark
+ * 
+ * @wordpress-plugin
  */
 
 if (!defined('ABSPATH')) {
