@@ -97,16 +97,17 @@ jobs:
         echo "commit_short=$COMMIT_SHORT" >> $GITHUB_OUTPUT
         echo "branch_name=$BRANCH_NAME" >> $GITHUB_OUTPUT
         
-    - name: Rename development ZIP
-      run: |
-        # Le script build-plugin.sh crée un ZIP avec le nom dev, on le renomme avec les infos de commit
-        if [ -f "build/download-pdf-watermark-dev.zip" ]; then
-          mv build/download-pdf-watermark-dev.zip build/download-pdf-watermark-dev-${{ steps.commit_info.outputs.branch_name }}-${{ steps.commit_info.outputs.commit_short }}.zip
-        fi
-        
-    - name: Upload development build
+    - name: Upload development build (ZIP ready for WordPress)
       uses: actions/upload-artifact@v4
       with:
         name: download-pdf-watermark-dev-${{ steps.commit_info.outputs.branch_name }}-${{ steps.commit_info.outputs.commit_short }}
-        path: build/download-pdf-watermark-dev-${{ steps.commit_info.outputs.branch_name }}-${{ steps.commit_info.outputs.commit_short }}.zip
+        path: |
+          build/download-pdf-watermark-dev.zip
+        retention-days: 7
+        
+    - name: Upload development build (extracted folder)
+      uses: actions/upload-artifact@v4
+      with:
+        name: download-pdf-watermark-dev-folder-${{ steps.commit_info.outputs.branch_name }}-${{ steps.commit_info.outputs.commit_short }}
+        path: build/download-pdf-watermark/
         retention-days: 7
