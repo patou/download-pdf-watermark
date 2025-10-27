@@ -155,8 +155,28 @@ compile_translations() {
             if [ "$VERBOSE" = true ]; then
                 echo "Compilation: $po_file"
             fi
-            wp i18n make-mo "$po_file" --quiet
-            ((compiled++))
+            
+            local mo_file="${po_file%.po}.mo"
+            
+            # Essayer d'abord avec WP-CLI
+            if command -v wp &> /dev/null && wp i18n make-mo "$po_file" --quiet 2>/dev/null; then
+                ((compiled++))
+                if [ "$VERBOSE" = true ]; then
+                    log "INFO" "Compilé avec WP-CLI: $mo_file"
+                fi
+            # Fallback avec msgfmt si disponible
+            elif command -v msgfmt &> /dev/null; then
+                if msgfmt -o "$mo_file" "$po_file" 2>/dev/null; then
+                    ((compiled++))
+                    if [ "$VERBOSE" = true ]; then
+                        log "INFO" "Compilé avec msgfmt: $mo_file"
+                    fi
+                else
+                    log "WARNING" "Échec de compilation de $po_file avec msgfmt"
+                fi
+            else
+                log "WARNING" "Impossible de compiler $po_file : ni WP-CLI ni msgfmt disponible"
+            fi
         fi
     done
     
